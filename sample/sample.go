@@ -1,4 +1,4 @@
-package main
+package sample
 
 import (
 	"bufio"
@@ -59,22 +59,4 @@ func toI(s string) int {
 
 func toS(i int) string {
 	return strconv.Itoa(i)
-}
-
-func main() {
-	N := readInt()
-	scores := make([][2]int, N+1) // インデックス0を初期状態として利用するために、サイズをN+1にしています。
-	for i := 1; i <= N; i++ {
-		row := readIntSlice()
-		c, p := row[0]-1, row[1] // cを0ベースのインデックスに調整
-		// scores[i]へのポインタを取得し、そのポインタを通じて値を更新
-		current := &scores[i]
-		*current = scores[i-1] // まず、前の要素の値をコピー
-		(*current)[c] += p     // 次に、適切なカテゴリにポイントを加算
-	}
-	q := readInt()
-	for i := 0; i < q; i++ {
-		l, r := readInt2()
-		fmt.Println(scores[r][0]-scores[l-1][0], scores[r][1]-scores[l-1][1])
-	}
 }
