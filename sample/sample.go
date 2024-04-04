@@ -60,3 +60,10 @@ func toI(s string) int {
 func toS(i int) string {
 	return strconv.Itoa(i)
 }
+
+func abs(v int) int {
+	if v < 0 {
+		return -v
+	}
+	return v
+}

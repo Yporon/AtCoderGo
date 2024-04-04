@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -61,7 +62,7 @@ func toS(i int) string {
 	return strconv.Itoa(i)
 }
 
-func main() {
+func main10() {
 	N := readInt()
 	scores := make([][2]int, N+1) // インデックス0を初期状態として利用するために、サイズをN+1にしています。
 	for i := 1; i <= N; i++ {
@@ -77,4 +78,25 @@ func main() {
 		l, r := readInt2()
 		fmt.Println(scores[r][0]-scores[l-1][0], scores[r][1]-scores[l-1][1])
 	}
+}
+
+func abs(v int) int {
+	if v < 0 {
+		return -v
+	}
+	return v
+}
+
+func main14() {
+	_ = readInt()
+	//fmt.Println(N)
+	aSlice := readIntSlice()
+	bSlice := readIntSlice()
+	sort.Slice(aSlice, func(i, j int) bool { return aSlice[i] < aSlice[j] })
+	sort.Slice(bSlice, func(i, j int) bool { return bSlice[i] < bSlice[j] })
+	count := 0
+	for i, _ := range aSlice {
+		count += abs(aSlice[i] - bSlice[i])
+	}
+	fmt.Println(count)
 }
