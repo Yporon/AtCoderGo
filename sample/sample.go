@@ -10,6 +10,10 @@ import (
 
 var rdr = bufio.NewReaderSize(os.Stdin, 10000000)
 
+//
+// 入力
+//
+
 func readline() string {
 	buf := make([]byte, 0, 16)
 	for {
@@ -49,6 +53,10 @@ func readInt3() (int, int, int) {
 	return toI(lines[0]), toI(lines[1]), toI(lines[2])
 }
 
+//
+// 変換
+//
+
 func toI(s string) int {
 	v, ok := strconv.Atoi(s)
 	if ok != nil {
@@ -60,6 +68,54 @@ func toI(s string) int {
 func toS(i int) string {
 	return strconv.Itoa(i)
 }
+
+// UnionFind
+type UnionFind struct {
+	parent []int
+	rank   []int
+}
+
+func NewUnionFind(size int) *UnionFind {
+	parent := make([]int, size)
+	rank := make([]int, size)
+	for i := range parent {
+		parent[i] = i
+	}
+	return &UnionFind{parent: parent, rank: rank}
+}
+
+func (uf *UnionFind) Find(x int) int {
+	if uf.parent[x] == x {
+		return x
+	}
+	uf.parent[x] = uf.Find(uf.parent[x])
+	return uf.parent[x]
+}
+
+func (uf *UnionFind) Unite(x, y int) {
+	xRoot := uf.Find(x)
+	yRoot := uf.Find(y)
+	if xRoot == yRoot {
+		return
+	}
+
+	if uf.rank[xRoot] < uf.rank[yRoot] {
+		uf.parent[xRoot] = yRoot
+	} else {
+		uf.parent[yRoot] = xRoot
+		if uf.rank[xRoot] == uf.rank[yRoot] {
+			uf.rank[xRoot]++
+		}
+	}
+}
+
+func (uf *UnionFind) Same(x, y int) bool {
+	return uf.Find(x) == uf.Find(y)
+}
+
+//
+// 便利関数
+//
 
 func abs(v int) int {
 	if v < 0 {
