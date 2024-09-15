@@ -11,7 +11,7 @@ import (
 var rdr = bufio.NewReaderSize(os.Stdin, 10000000)
 
 //
-// 入力
+// NOTE:入力
 //
 
 func readline() string {
@@ -54,7 +54,7 @@ func readInt3() (int, int, int) {
 }
 
 //
-// 変換
+// NOTE:変換
 //
 
 func toI(s string) int {
@@ -69,7 +69,23 @@ func toS(i int) string {
 	return strconv.Itoa(i)
 }
 
+// NOTE:便利関数
+func abs(v int) int {
+	if v < 0 {
+		return -v
+	}
+	return v
+}
+
+func min(x, y int) int {
+	if x < y {
+		return x
+	}
+	return y
+}
+
 // UnionFind
+// NOTE:UnionFind
 type UnionFind struct {
 	parent []int
 	rank   []int
@@ -111,22 +127,4 @@ func (uf *UnionFind) Unite(x, y int) {
 
 func (uf *UnionFind) Same(x, y int) bool {
 	return uf.Find(x) == uf.Find(y)
-}
-
-//
-// 便利関数
-//
-
-func abs(v int) int {
-	if v < 0 {
-		return -v
-	}
-	return v
-}
-
-func min(x, y int) int {
-	if x < y {
-		return x
-	}
-	return y
 }
