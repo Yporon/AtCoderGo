@@ -1,46 +1,44 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"strings"
+	"sort"
 )
 
 func main() {
-	ST := readline()
-	words := strings.Fields(ST)
-	S := words[0]
-	T := words[1]
-	// 文字分割を全パターン試す
-	for w := 1; w < len(S); w++ {
-		for c := 0; c < w; c++ {
-			name := ""
-			for i := c; i < len(S); i += w {
-				name += string(S[i])
-			}
-			if name == T {
-				fmt.Println("Yes")
-				return
-			}
+	N := ni()
+	AList := nis(N)
+	WList := nis(N)
+
+	WMap := make(map[int]int)
+	for i, v := range WList {
+		WMap[i] = v
+	}
+
+	WAListMap := map[int][]int{
+		0: {},
+		1: {},
+		2: {},
+		3: {},
+	}
+
+	for i := 0; i < N; i++ {
+		Ai := AList[i]
+		WAListMap[Ai-1] = append(WAListMap[Ai-1], WMap[i])
+	}
+	sum := 0
+	for _, v := range WAListMap {
+		if len(v) < 2 {
+			continue
+		}
+		sort.Ints(v)
+		for _, vv := range v[:len(v)-1] {
+			sum += vv
 		}
 	}
-	fmt.Println("No")
+	fmt.Println(sum)
 }
 
-func readline() string {
-	var rdr = bufio.NewReaderSize(os.Stdin, 10000000)
-	buf := make([]byte, 0, 16)
-	for {
-		l, p, e := rdr.ReadLine()
-		if e != nil {
-			fmt.Println(e.Error())
-			panic(e)
-		}
-		buf = append(buf, l...)
-		if !p {
-			break
-		}
-	}
-	return string(buf)
-}
+// ==================================================
+// io
+// ==================================================

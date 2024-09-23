@@ -2,60 +2,55 @@ package sample
 
 import (
 	"bufio"
-	"fmt"
+	"math"
 	"os"
 	"strconv"
-	"strings"
 )
 
-var rdr = bufio.NewReaderSize(os.Stdin, 10000000)
+var sc = bufio.NewScanner(os.Stdin)
 
-//
-// NOTE:入力
-//
-
-func readline() string {
-	buf := make([]byte, 0, 16)
-	for {
-		l, p, e := rdr.ReadLine()
-		if e != nil {
-			fmt.Println(e.Error())
-			panic(e)
-		}
-		buf = append(buf, l...)
-		if !p {
-			break
-		}
-	}
-	return string(buf)
-}
-
-func readIntSlice() []int {
-	slice := make([]int, 0)
-	lines := strings.Split(readline(), " ")
-	for _, v := range lines {
-		slice = append(slice, toI(v))
-	}
-	return slice
+func init() {
+	sc.Buffer([]byte{}, math.MaxInt64)
+	sc.Split(bufio.ScanWords)
 }
 
 func readInt() int {
-	return toI(readline())
+	sc.Scan()
+	i, e := strconv.Atoi(sc.Text())
+	if e != nil {
+		panic(e)
+	}
+	return i
 }
-
 func readInt2() (int, int) {
-	lines := strings.Split(readline(), " ")
-	return toI(lines[0]), toI(lines[1])
+	return readInt(), readInt()
 }
 
 func readInt3() (int, int, int) {
-	lines := strings.Split(readline(), " ")
-	return toI(lines[0]), toI(lines[1]), toI(lines[2])
+	return readInt(), readInt(), readInt()
 }
 
-// 空白スプリット
-func stringsFields(s string) []string {
-	return strings.Fields(s)
+func readInt4() (int, int, int, int) {
+	return readInt(), readInt(), readInt(), readInt()
+}
+
+func readIntSlice(arg ...int) []int {
+	n := arg[0]
+	t := 0
+	if len(arg) == 2 {
+		t = arg[1]
+	}
+
+	a := make([]int, n)
+	for i := 0; i < n; i++ {
+		a[i] = readInt() - t
+	}
+	return a
+}
+
+func readStr() string {
+	sc.Scan()
+	return sc.Text()
 }
 
 //
