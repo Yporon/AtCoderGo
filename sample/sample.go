@@ -53,6 +53,11 @@ func readInt3() (int, int, int) {
 	return toI(lines[0]), toI(lines[1]), toI(lines[2])
 }
 
+// 空白スプリット
+func stringsFields(s string) []string {
+	return strings.Fields(s)
+}
+
 //
 // NOTE:変換
 //

@@ -8,14 +8,24 @@ import (
 )
 
 func main() {
-	S := readline()
-	Rindex := strings.Index(S, "R")
-	Mindex := strings.Index(S, "M")
-	if Rindex < Mindex {
-		fmt.Println("Yes")
-	} else {
-		fmt.Println("No")
+	ST := readline()
+	words := strings.Fields(ST)
+	S := words[0]
+	T := words[1]
+	// 文字分割を全パターン試す
+	for w := 1; w < len(S); w++ {
+		for c := 0; c < w; c++ {
+			name := ""
+			for i := c; i < len(S); i += w {
+				name += string(S[i])
+			}
+			if name == T {
+				fmt.Println("Yes")
+				return
+			}
+		}
 	}
+	fmt.Println("No")
 }
 
 func readline() string {
